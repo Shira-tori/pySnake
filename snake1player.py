@@ -33,6 +33,9 @@ def initialize():
     pygame.init()
     random.seed()
     pygame.font.init()
+    pygame.display.set_caption("Snake")
+    icon = pygame.image.load("icon.png")
+    pygame.display.set_icon(icon)
 
     global SCREEN
     global screen
