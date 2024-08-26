@@ -1,4 +1,6 @@
+import food
 import pygame 
+import random
 import snake
 
 DISPLAY = (1280, 720)
@@ -18,6 +20,9 @@ class SnakeGame:
                                   STARTING_LENGTH,
                                   [20, 0]
                                   )
+        self.food = food.Food(SNAKE_SIZE, 
+                              self.snake1,
+                              DISPLAY)
 
 
     def checkEvents(self) -> None:
@@ -30,15 +35,29 @@ class SnakeGame:
         pygame.quit()
         exit()
 
+    # Fix snake can turn into itself and going out of bounds.
+    def handleInput(self) -> None:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+            self.snake1.speed = [20, 0]
+        elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
+            self.snake1.speed = [-20, 0]
+        elif keys[pygame.K_w] or keys[pygame.K_UP]:
+            self.snake1.speed = [0, -20]
+        elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            self.snake1.speed = [0, 20]
+
 
     def run(self) -> None:
         while self.running:
             self.checkEvents()
+            self.handleInput()
             self.screen.fill(color='black')
             self.snake1.renderSnake(self.screen)
+            self.food.renderFood(self.screen)
             pygame.display.flip()
             print(self.clock.tick(10))
-            self.snake1.moveSnake()
+            self.snake1.moveSnake(self.food)
         
 
 if __name__ == '__main__':

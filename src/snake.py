@@ -48,6 +48,13 @@ class SnakeBody:
             self.bodies.append(Body(last_pos[0] - size, last_pos[1], size))
 
 
+    def addLength(self):
+        self.bodies.append(Body(self.bodies[-1].rect.x,
+                                self.bodies[-1].rect.y,
+                                self.size))
+
+        self.length += 1
+
     def moveBody(self) -> None:
         last_pos = list()
         last_pos1 = list()
@@ -85,16 +92,10 @@ class Snake:
             pygame.draw.rect(screen, 'green', body.rect, self.size)
 
 
-    def moveSnake(self) -> None:
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            self.speed = [20, 0]
-        elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            self.speed = [-20, 0]
-        elif keys[pygame.K_w] or keys[pygame.K_UP]:
-            self.speed = [0, -20]
-        elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            self.speed = [0, 20]
+    def moveSnake(self, food) -> None:
         self.body.moveBody()
         self.head.moveHead(self.speed)
-        pass
+        if (self.head.rect.x == food.rect.x and 
+            self.head.rect.y == food.rect.y):
+            food.changePos(self)
+            self.body.addLength()
