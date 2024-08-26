@@ -3,7 +3,7 @@ import snake
 
 DISPLAY = (1280, 720)
 SNAKE_SIZE = 20
-STARTING_LENGTH = 3
+STARTING_LENGTH = 4
 
 class SnakeGame:
 
@@ -14,7 +14,8 @@ class SnakeGame:
         self.clock = pygame.time.Clock()
         self.running = True
         self.snake1 = snake.Snake(0, 0, 
-                                  SNAKE_SIZE, STARTING_LENGTH,
+                                  SNAKE_SIZE, 
+                                  STARTING_LENGTH,
                                   [20, 0]
                                   )
 

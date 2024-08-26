@@ -50,14 +50,17 @@ class SnakeBody:
 
     def moveBody(self) -> None:
         last_pos = list()
+        last_pos1 = list()
         for i in range(self.length):
             if i == 0:
                 last_pos = [self.bodies[i].rect.x, self.bodies[i].rect.y]
                 self.bodies[i].rect.x = self.head.rect.x
                 self.bodies[i].rect.y = self.head.rect.y
                 continue
+            last_pos1 = [self.bodies[i].rect.x, self.bodies[i].rect.y]
             self.bodies[i].rect.x = last_pos[0]
             self.bodies[i].rect.y = last_pos[1]
+            last_pos = last_pos1
 
 
 class Snake:
@@ -83,6 +86,15 @@ class Snake:
 
 
     def moveSnake(self) -> None:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+            self.speed = [20, 0]
+        elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
+            self.speed = [-20, 0]
+        elif keys[pygame.K_w] or keys[pygame.K_UP]:
+            self.speed = [0, -20]
+        elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            self.speed = [0, 20]
         self.body.moveBody()
         self.head.moveHead(self.speed)
         pass
