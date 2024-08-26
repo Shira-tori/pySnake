@@ -8,12 +8,15 @@ STARTING_LENGTH = 3
 class SnakeGame:
 
 
-    def __init__(self):
+    def __init__(self) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode(DISPLAY)
         self.clock = pygame.time.Clock()
         self.running = True
-        self.snake1 = snake.Snake(20, 20, SNAKE_SIZE, STARTING_LENGTH)
+        self.snake1 = snake.Snake(0, 0, 
+                                  SNAKE_SIZE, STARTING_LENGTH,
+                                  [20, 0]
+                                  )
 
 
     def checkEvents(self) -> None:
@@ -22,7 +25,7 @@ class SnakeGame:
                 self.quit()
 
 
-    def quit(self):
+    def quit(self) -> None:
         pygame.quit()
         exit()
 
@@ -33,7 +36,8 @@ class SnakeGame:
             self.screen.fill(color='black')
             self.snake1.renderSnake(self.screen)
             pygame.display.flip()
-            dt = self.clock.tick(60) / 1000
+            print(self.clock.tick(10))
+            self.snake1.moveSnake()
         
 
 if __name__ == '__main__':
