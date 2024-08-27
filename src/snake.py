@@ -48,7 +48,7 @@ class SnakeBody:
             self.bodies.append(Body(last_pos[0] - size, last_pos[1], size))
 
 
-    def addLength(self):
+    def addLength(self) -> None:
         self.bodies.append(Body(self.bodies[-1].rect.x,
                                 self.bodies[-1].rect.y,
                                 self.size))

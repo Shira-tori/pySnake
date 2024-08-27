@@ -49,6 +49,7 @@ class SnakeGame:
 
 
     def run(self) -> None:
+        miliseconds = int()
         while self.running:
             self.checkEvents()
             self.handleInput()
@@ -56,8 +57,11 @@ class SnakeGame:
             self.snake1.renderSnake(self.screen)
             self.food.renderFood(self.screen)
             pygame.display.flip()
-            print(self.clock.tick(10))
-            self.snake1.moveSnake(self.food)
+            if miliseconds >= 100:
+                self.snake1.moveSnake(self.food)
+                miliseconds = 0
+                continue
+            miliseconds += self.clock.tick()
         
 
 if __name__ == '__main__':

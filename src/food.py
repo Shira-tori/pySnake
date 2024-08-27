@@ -26,12 +26,6 @@ class Food:
     def changePos(self, snake: snake.Snake):
         self.rect.x = random.randrange(0, self.display[0], self.size)
         self.rect.y = random.randrange(0, self.display[1], self.size)
-#        snake_pos_x = list()
-#        snake_pos_y = list()
-#        for i in snake.body.bodies:
-#            snake_pos_x.append(i.rect.x)
-#            snake_pos_y.append(i.rect.y)
-
-
-        pass
-
+        for i in snake.body.bodies:
+            if (i.rect.x == self.rect.x and i.rect.y == self.rect.y):
+                self.changePos(snake)
