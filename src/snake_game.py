@@ -38,13 +38,17 @@ class SnakeGame:
     # Fix snake can turn into itself and going out of bounds.
     def handleInput(self) -> None:
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+        if ((keys[pygame.K_d] or keys[pygame.K_RIGHT]) and
+            self.snake1.speed != [-20, 0]):
             self.snake1.speed = [20, 0]
-        elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
+        elif ((keys[pygame.K_a] or keys[pygame.K_LEFT]) and
+            self.snake1.speed != [20, 0]):
             self.snake1.speed = [-20, 0]
-        elif keys[pygame.K_w] or keys[pygame.K_UP]:
+        elif ((keys[pygame.K_w] or keys[pygame.K_UP]) and 
+            self.snake1.speed != [0, 20]):
             self.snake1.speed = [0, -20]
-        elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
+        elif ((keys[pygame.K_s] or keys[pygame.K_DOWN]) and
+            self.snake1.speed != [0, -20]):
             self.snake1.speed = [0, 20]
 
 
