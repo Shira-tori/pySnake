@@ -35,32 +35,41 @@ class SnakeGame:
         pygame.quit()
         exit()
 
-    # Fix snake can turn into itself and going out of bounds.
-    def handleInput(self) -> None:
+    def handleInput(self, keys_: list[str]) -> str:
+        if len(keys_) > 2:
+            return ''
+        keys_pressed = str()
         keys = pygame.key.get_pressed()
         if ((keys[pygame.K_d] or keys[pygame.K_RIGHT]) and
             self.snake1.speed != [-20, 0]):
-            self.snake1.speed = [20, 0]
-        elif ((keys[pygame.K_a] or keys[pygame.K_LEFT]) and
+            keys_pressed = 'right'
+        if ((keys[pygame.K_a] or keys[pygame.K_LEFT]) and
             self.snake1.speed != [20, 0]):
-            self.snake1.speed = [-20, 0]
-        elif ((keys[pygame.K_w] or keys[pygame.K_UP]) and 
+            keys_pressed = 'left'
+        if ((keys[pygame.K_w] or keys[pygame.K_UP]) and 
             self.snake1.speed != [0, 20]):
-            self.snake1.speed = [0, -20]
-        elif ((keys[pygame.K_s] or keys[pygame.K_DOWN]) and
+            keys_pressed = 'up'
+        if ((keys[pygame.K_s] or keys[pygame.K_DOWN]) and
             self.snake1.speed != [0, -20]):
-            self.snake1.speed = [0, 20]
+            keys_pressed = 'down'
+
+        return keys_pressed
 
 
     def run(self) -> None:
         miliseconds = int()
+        keys_pressed = list()
         while self.running:
             self.checkEvents()
-            self.handleInput()
+            keys = self.handleInput(keys_pressed)
+            if keys and keys not in keys_pressed:
+                keys_pressed.append(keys)
+            print(keys_pressed)
             self.screen.fill(color='black')
             self.snake1.renderSnake(self.screen)
             self.food.renderFood(self.screen)
             pygame.display.flip()
+            self.snake1.handleInput(keys_pressed)
             if miliseconds >= 100:
                 self.snake1.moveSnake(self.food)
                 miliseconds = 0

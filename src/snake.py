@@ -92,6 +92,31 @@ class Snake:
             pygame.draw.rect(screen, 'green', body.rect, self.size)
 
 
+    def handleInput(self, keys_pressed: list[str]) -> None:
+        for i in keys_pressed:
+            match i:
+                case 'left':
+                    if self.head.rect.x - 20 == self.body.bodies[0].rect.x:
+                        return
+                    self.speed = [-20, 0]
+                    keys_pressed.remove(i)
+                case 'right':
+                    if self.head.rect.x + 20 == self.body.bodies[0].rect.x:
+                        return
+                    self.speed = [20, 0]
+                    keys_pressed.remove(i)
+                case 'up':
+                    if self.head.rect.y - 20 == self.body.bodies[0].rect.y:
+                        return
+                    self.speed = [0, -20]
+                    keys_pressed.remove(i)
+                case 'down':
+                    if self.head.rect.y + 20 == self.body.bodies[0].rect.y:
+                        return
+                    self.speed = [0, 20]
+                    keys_pressed.remove(i)
+
+
     def moveSnake(self, food) -> None:
         self.body.moveBody()
         self.head.moveHead(self.speed)
