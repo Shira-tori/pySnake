@@ -4,6 +4,7 @@ import random
 import snake
 
 DISPLAY = (1280, 720)
+PLAY_AREA = (1000, 600)
 SNAKE_SIZE = 20
 STARTING_LENGTH = 4
 
@@ -22,7 +23,7 @@ class SnakeGame:
                                   )
         self.food = food.Food(SNAKE_SIZE, 
                               self.snake1,
-                              DISPLAY)
+                              PLAY_AREA)
 
 
     def checkEvents(self) -> None:
@@ -62,10 +63,15 @@ class SnakeGame:
         while self.running:
             self.checkEvents()
             keys = self.handleInput(keys_pressed)
-            if keys and keys not in keys_pressed:
-                keys_pressed.append(keys)
+            if keys and keys not in keys_pressed: keys_pressed.append(keys)
+            if len(keys_pressed) > 2: keys_pressed.pop()
             print(keys_pressed)
-            self.screen.fill(color='black')
+            self.screen.fill(color='grey')
+            play_area = pygame.Rect((DISPLAY[0]/2) - (PLAY_AREA[0]/2), 
+                                    (DISPLAY[1]/2) - (PLAY_AREA[1]/2), 
+                                    PLAY_AREA[0], 
+                                    PLAY_AREA[1])
+            pygame.draw.rect(self.screen, 'black', play_area)            
             self.snake1.renderSnake(self.screen)
             self.food.renderFood(self.screen)
             pygame.display.flip()
